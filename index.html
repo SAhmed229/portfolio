@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ahmed — projects</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bitter:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f0ece4;
+    --accent: #ff4a1c;
+    --grey: #6b6b6b;
+    --border: 2px solid var(--black);
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--white);
+  }
+
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--white);
+    color: var(--black);
+    font-family: 'Space Mono', monospace;
+    overflow-x: hidden;
+    cursor: crosshair;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-bottom: var(--border);
+    background: var(--white);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+
+  .topbar-left {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .topbar .name {
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+
+  .topbar-right {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .topbar-right a {
+    position: relative;
+    padding: 0.25rem 0;
+    cursor: pointer;
+  }
+
+  .topbar-right a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+
+  .topbar-right a:hover::after {
+    width: 100%;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    margin-top: 52px;
+    min-height: 95vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 2rem;
+    border-bottom: var(--border);
+    position: relative;
+  }
+
+  .hero-title {
+    font-family: 'Bitter', serif;
+    font-size: clamp(4rem, 12vw, 10rem);
+    line-height: 0.9;
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    margin-bottom: 2rem;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-subtitle {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--grey);
+    max-width: 500px;
+    line-height: 1.8;
+  }
+
+  .hero-marker {
+    position: absolute;
+    right: 2rem;
+    bottom: 2rem;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--grey);
+    writing-mode: vertical-rl;
+  }
+
+  .hero-idx {
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Bitter', serif;
+    font-size: clamp(8rem, 20vw, 18rem);
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--black);
+    opacity: 0.08;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  /* ── PROJECTS SECTION ── */
+  .projects-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 2rem 2rem 1rem;
+    border-bottom: 1px solid var(--black);
+  }
+
+  .projects-header h2 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-weight: 400;
+  }
+
+  .projects-header span {
+    font-size: 0.65rem;
+    color: var(--grey);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── PROJECT CARD ── */
+  .project {
+    border-bottom: var(--border);
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr;
+    min-height: 420px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s ease;
+  }
+
+  .project:hover {
+    background: var(--black);
+    color: var(--white);
+  }
+
+  .project:hover .project-accent {
+    color: var(--accent);
+  }
+
+  .project:hover .project-tags span {
+    border-color: var(--white);
+  }
+
+  .project:hover .project-number {
+    -webkit-text-stroke-color: rgba(255,255,255,0.1);
+  }
+
+  .project-index {
+    border-right: var(--border);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 2rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+
+  .project:hover .project-index {
+    border-right-color: var(--white);
+  }
+
+  .project-info {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px dashed rgba(0,0,0,0.15);
+    position: relative;
+    z-index: 2;
+  }
+
+  .project:hover .project-info {
+    border-right-color: rgba(255,255,255,0.1);
+  }
+
+  .project-name {
+    font-family: 'Bitter', serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-desc {
+    font-size: 0.78rem;
+    line-height: 1.9;
+    color: var(--grey);
+    max-width: 420px;
+  }
+
+  .project:hover .project-desc {
+    color: #aaa;
+  }
+
+  .project-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: auto;
+    padding-top: 2rem;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .project-tags span {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--black);
+    transition: all 0.3s ease;
+  }
+
+  .project-tags span:hover {
+    background: var(--accent);
+    color: var(--white);
+    border-color: var(--accent);
+  }
+
+  .project-link {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    width: fit-content;
+  }
+
+  .project-link .arrow {
+    display: inline-block;
+    transition: transform 0.3s ease;
+  }
+
+  .project-link:hover .arrow {
+    transform: translateX(6px);
+  }
+
+  .project-right {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-number {
+    font-family: 'Bitter', serif;
+    font-size: clamp(10rem, 18vw, 16rem);
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--black);
+    opacity: 0.07;
+    position: absolute;
+    user-select: none;
+    pointer-events: none;
+    line-height: 1;
+  }
+
+  .project-visual {
+    width: 100%;
+    height: 260px;
+    border: var(--border);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .project:hover .project-visual {
+    border-color: var(--white);
+  }
+
+  /* ascii art visuals */
+  .ascii-art {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    line-height: 1.3;
+    white-space: pre;
+    color: var(--grey);
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+  }
+
+  .project:hover .ascii-art {
+    color: var(--accent);
+    opacity: 1;
+  }
+
+  /* ── ABOUT / FOOTER ── */
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: var(--border);
+  }
+
+  .about-left {
+    padding: 4rem 2rem;
+    border-right: 1px dashed rgba(0,0,0,0.15);
+  }
+
+  .about-left h2 {
+    font-family: 'Bitter', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1;
+    margin-bottom: 2rem;
+    letter-spacing: -0.02em;
+  }
+
+  .about-left p {
+    font-size: 0.78rem;
+    line-height: 2;
+    color: var(--grey);
+    max-width: 440px;
+  }
+
+  .about-right {
+    padding: 4rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .contact-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .contact-list li {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+  }
+
+  .contact-list li a {
+    color: var(--grey);
+    transition: color 0.3s;
+  }
+
+  .contact-list li a:hover {
+    color: var(--accent);
+  }
+
+  .status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--grey);
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .footer {
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--grey);
+  }
+
+  /* ── FUTURE PROJECTS ── */
+  .future-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: var(--border);
+  }
+
+  .future-card {
+    padding: 2.5rem 2rem;
+    border-right: 1px dashed rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    position: relative;
+    transition: background 0.4s ease;
+  }
+
+  .future-card:last-child {
+    border-right: none;
+  }
+
+  .future-card:hover {
+    background: var(--black);
+    color: var(--white);
+  }
+
+  .future-card:hover .future-desc {
+    color: #aaa;
+  }
+
+  .future-card:hover .project-tags span {
+    border-color: var(--white);
+  }
+
+  .future-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+  }
+
+  .status-ring {
+    width: 6px;
+    height: 6px;
+    border: 1.5px solid var(--accent);
+    border-radius: 50%;
+  }
+
+  .future-name {
+    font-family: 'Bitter', serif;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+
+  .future-desc {
+    font-size: 0.78rem;
+    line-height: 1.9;
+    color: var(--grey);
+    max-width: 400px;
+  }
+
+  @media (max-width: 860px) {
+    .future-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .future-card {
+      border-right: none;
+      border-bottom: 1px dashed rgba(0,0,0,0.15);
+    }
+
+    .future-card:last-child {
+      border-bottom: none;
+    }
+  }
+
+  /* ── ANIMATIONS ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: revealUp 0.8s ease forwards;
+  }
+
+  .reveal-d1 { animation-delay: 0.1s; }
+  .reveal-d2 { animation-delay: 0.2s; }
+  .reveal-d3 { animation-delay: 0.35s; }
+  .reveal-d4 { animation-delay: 0.5s; }
+
+  @keyframes revealUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* scroll-triggered */
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .scroll-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── MARQUEE ── */
+  .marquee-bar {
+    overflow: hidden;
+    border-bottom: var(--border);
+    padding: 0.75rem 0;
+    white-space: nowrap;
+  }
+
+  .marquee-track {
+    display: inline-flex;
+    animation: marquee 20s linear infinite;
+  }
+
+  .marquee-track span {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--grey);
+    padding: 0 2rem;
+  }
+
+  .marquee-track span.accent-dot {
+    color: var(--accent);
+    letter-spacing: 0;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 860px) {
+    .project {
+      grid-template-columns: 60px 1fr;
+      min-height: auto;
+    }
+
+    .project-right {
+      display: none;
+    }
+
+    .about {
+      grid-template-columns: 1fr;
+    }
+
+    .about-left {
+      border-right: none;
+      border-bottom: 1px dashed rgba(0,0,0,0.15);
+    }
+  }
+
+  @media (max-width: 520px) {
+    .topbar {
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: flex-start;
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 14vw, 6rem);
+    }
+
+    .project-name {
+      font-size: 2rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<nav class="topbar">
+  <div class="topbar-left">
+    <span class="name">Ahmed Shousha</span>
+    <span>CS Student</span>
+  </div>
+  <div class="topbar-right">
+    <a href="#projects">Work</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1 class="hero-title reveal">
+    Hey,<br>
+    come<br>
+    take a <em>look</em><br>
+    around.
+  </h1>
+  <p class="hero-subtitle reveal reveal-d2">
+    I'm Ahmed — a CS student who likes building things.<br>
+    Here's some of what I've been working on.
+  </p>
+  <span class="hero-marker reveal reveal-d4">Scroll ↓</span>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-bar">
+  <div class="marquee-track">
+    <span>Swift</span><span class="accent-dot">●</span>
+    <span>Metal</span><span class="accent-dot">●</span>
+    <span>SceneKit</span><span class="accent-dot">●</span>
+    <span>ARKit</span><span class="accent-dot">●</span>
+    <span>C#</span><span class="accent-dot">●</span>
+    <span>React</span><span class="accent-dot">●</span>
+    <span>Python</span><span class="accent-dot">●</span>
+    <span>CloudKit</span><span class="accent-dot">●</span>
+    <span>Swift</span><span class="accent-dot">●</span>
+    <span>Metal</span><span class="accent-dot">●</span>
+    <span>SceneKit</span><span class="accent-dot">●</span>
+    <span>ARKit</span><span class="accent-dot">●</span>
+    <span>C#</span><span class="accent-dot">●</span>
+    <span>React</span><span class="accent-dot">●</span>
+    <span>Python</span><span class="accent-dot">●</span>
+    <span>CloudKit</span><span class="accent-dot">●</span>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<div id="projects">
+  <div class="projects-header">
+    <h2>Selected Projects</h2>
+    <span>03 Works</span>
+  </div>
+
+  <!-- Project 01 -->
+  <article class="project scroll-reveal">
+    <div class="project-index">01</div>
+    <div class="project-info">
+      <div>
+        <h3 class="project-name">Anchor<br>Map<span class="project-accent">.</span></h3>
+        <p class="project-desc">
+          An iOS app that integrates Apple Maps with LiDAR scanning to capture and geotag 3D spatial data. Scans are stored in CloudKit and displayed on personal, shared, or public maps for collaborative 3D exploration.
+        </p>
+      </div>
+      <div class="project-meta">
+        <div class="project-tags">
+          <span>SwiftUI</span>
+          <span>LiDAR</span>
+          <span>CloudKit</span>
+          <span>MapKit</span>
+        </div>
+        <a class="project-link" href="#">
+          View Project <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+    <div class="project-right">
+      <div class="project-number">01</div>
+      <div class="project-visual">
+        <pre class="ascii-art">
+     ┌───────────────────┐
+     │  ◉ LiDAR SCAN     │
+     │  ╭╌╌╌╌╌╌╌╌╌╌╌╮    │
+     │  ┆  ·  ··· ·  ┆    │
+     │  ┆ ···▓▓▓··· ┆    │
+     │  ┆ ·▓▓▓▓▓▓▓· ┆    │
+     │  ┆  ·▓▓▓▓▓·  ┆    │
+     │  ╰╌╌╌╌╌╌╌╌╌╌╌╯    │
+     │  📍 37.2°N 80.4°W  │
+     │  ☁ synced           │
+     └───────────────────┘
+        </pre>
+      </div>
+    </div>
+  </article>
+
+  <!-- Project 02 -->
+  <article class="project scroll-reveal">
+    <div class="project-index">02</div>
+    <div class="project-info">
+      <div>
+        <h3 class="project-name">Heartbeat<br>Terrain<span class="project-accent">.</span></h3>
+        <p class="project-desc">
+          A real-time 3D terrain engine driven by Apple Watch heart rate data and GPS coordinates. Procedural heightmaps via Perlin noise, computed on the GPU with Metal shaders and rendered in SceneKit.
+        </p>
+      </div>
+      <div class="project-meta">
+        <div class="project-tags">
+          <span>Metal</span>
+          <span>SceneKit</span>
+          <span>HealthKit</span>
+          <span>GPU Compute</span>
+        </div>
+        <a class="project-link" href="#">
+          View Project <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+    <div class="project-right">
+      <div class="project-number">02</div>
+      <div class="project-visual">
+        <pre class="ascii-art">
+        ♡ 82 bpm
+                  ╱╲
+            ╱╲  ╱    ╲    ╱╲
+      ╱╲  ╱    ╲        ╲╱    ╲
+    ╱    ╲                      ╲
+  ╱                               ╲
+
+  ▓▓▓▒▒▒░░░▒▒▓▓▓▓▒▒░░▒▒▓▓▓▓▒▒░░
+  ▓▓▒▒░░░░▒▒▓▓▓▒▒░░░▒▒▓▓▓▒▒░░░░
+  [ Metal compute → SceneKit ]
+        </pre>
+      </div>
+    </div>
+  </article>
+
+  <!-- Project 03 -->
+  <article class="project scroll-reveal">
+    <div class="project-index">03</div>
+    <div class="project-info">
+      <div>
+        <h3 class="project-name">Stock<br>Engine<span class="project-accent">.</span></h3>
+        <p class="project-desc">
+          A backend trading system handling up to 10,000 simulated order requests per minute. Supports user accounts, order management, and trade execution tracking. Built during an internship at EFG Holding.
+        </p>
+      </div>
+      <div class="project-meta">
+        <div class="project-tags">
+          <span>ASP.NET Core</span>
+          <span>EF Core</span>
+          <span>MySQL</span>
+          <span>C#</span>
+        </div>
+        <a class="project-link" href="#">
+          View Project <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+    <div class="project-right">
+      <div class="project-number">03</div>
+      <div class="project-visual">
+        <pre class="ascii-art">
+    $ ./trade-engine --simulate
+    ┌────────────────────┐
+    │ ORDERS/MIN: 10,000 │
+    │ ━━━━━━━━━━━━━━━━━━ │
+    │                    │
+    │ BUY  ▸ AAPL  142.5 │
+    │ SELL ▸ MSFT  389.2 │
+    │ BUY  ▸ GOOG  174.8 │
+    │                    │
+    │ EXEC:  ✓ matched   │
+    │ QUEUE: 3 pending   │
+    └────────────────────┘
+        </pre>
+      </div>
+    </div>
+  </article>
+</div>
+
+<!-- FUTURE PROJECTS -->
+<section class="future" id="future">
+  <div class="projects-header">
+    <h2>What's Next</h2>
+    <span>In Progress / Planned</span>
+  </div>
+  <div class="future-grid">
+
+    <div class="future-card scroll-reveal">
+      <div class="future-status">
+        <span class="status-dot"></span>
+        In Progress
+      </div>
+      <h3 class="future-name">Project Name</h3>
+      <p class="future-desc">
+        Brief description of what you're building, what problem it solves, and what makes it interesting to you.
+      </p>
+      <div class="project-tags">
+        <span>Tech</span>
+        <span>Stack</span>
+        <span>Here</span>
+      </div>
+    </div>
+
+    <div class="future-card scroll-reveal">
+      <div class="future-status planned">
+        <span class="status-ring"></span>
+        Planned
+      </div>
+      <h3 class="future-name">Project Name</h3>
+      <p class="future-desc">
+        Brief description of what you're planning, what you want to learn, and why this excites you.
+      </p>
+      <div class="project-tags">
+        <span>Tech</span>
+        <span>Stack</span>
+        <span>Here</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-left scroll-reveal">
+    <h2>About<br>me.</h2>
+    <p>
+      CS student at Virginia Tech, class of 2027. I spend most of my time building iOS apps — lately with Metal shaders, LiDAR, and SceneKit. I've interned as a backend developer and I like working across the stack, from GPU compute pipelines to REST APIs.
+    </p>
+  </div>
+  <div class="about-right scroll-reveal" id="contact">
+    <ul class="contact-list">
+      <li>
+        <span>GitHub</span>
+        <a href="https://github.com/SAhmed229">github.com/SAhmed229 →</a>
+      </li>
+      <li>
+        <span>Email</span>
+        <a href="mailto:ahmedshousha@vt.edu">ahmedshousha@vt.edu →</a>
+      </li>
+      <li>
+        <span>LinkedIn</span>
+        <a href="#">linkedin.com/in/ahmed →</a>
+      </li>
+      <li>
+        <span>Resume</span>
+        <a href="#">download pdf →</a>
+      </li>
+    </ul>
+    <div class="status">
+      <span class="status-dot"></span>
+      Open to internships & collaborations
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <span>© 2026 Ahmed Shousha</span>
+  <span>Blacksburg, VA</span>
+  <span>Last updated — Mar 2026</span>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
