@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ahmed shousha</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bitter:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/projects.css">
+  <link rel="stylesheet" href="css/sections.css">
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="topbar-left">
+    <span class="name">Ahmed Shousha</span>
+    <span>CS Student</span>
+  </div>
+  <div class="topbar-right">
+    <a href="#projects">Work</a>
+    <a href="#future">Ongoing</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1 class="hero-title reveal">
+    Hey,<br>
+    come<br>
+    take a look<br>
+    around.
+  </h1>
+  <p class="hero-subtitle reveal reveal-d2">
+    I'm Ahmed &#8212; a CS student who likes building things.<br>
+    Here's some of what I've been working on.
+  </p>
+  <span class="hero-marker reveal reveal-d4">Scroll &#8595;</span>
+</section>
+
+<div class="marquee-bar">
+  <div class="marquee-track">
+    <span>Swift</span><span class="accent-dot">&#9679;</span>
+    <span>Metal</span><span class="accent-dot">&#9679;</span>
+    <span>SceneKit</span><span class="accent-dot">&#9679;</span>
+    <span>ARKit</span><span class="accent-dot">&#9679;</span>
+    <span>C#</span><span class="accent-dot">&#9679;</span>
+    <span>ASP.NET</span><span class="accent-dot">&#9679;</span>
+    <span>Python</span><span class="accent-dot">&#9679;</span>
+    <span>CloudKit</span><span class="accent-dot">&#9679;</span>
+    <span>Swift</span><span class="accent-dot">&#9679;</span>
+    <span>Metal</span><span class="accent-dot">&#9679;</span>
+    <span>SceneKit</span><span class="accent-dot">&#9679;</span>
+    <span>ARKit</span><span class="accent-dot">&#9679;</span>
+    <span>C#</span><span class="accent-dot">&#9679;</span>
+    <span>ASP.NET</span><span class="accent-dot">&#9679;</span>
+    <span>Python</span><span class="accent-dot">&#9679;</span>
+    <span>CloudKit</span><span class="accent-dot">&#9679;</span>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<div id="projects">
+  <div class="projects-header">
+    <h2>Selected Projects</h2>
+    <span>03 Works</span>
+  </div>
+
+  <!-- Project 01: Stock Engine -->
+  <article class="project scroll-reveal">
+    <div class="project-index">01</div>
+    <div class="project-info">
+      <div>
+        <h3 class="project-name">Stock<br>Engine<span class="project-accent">.</span></h3>
+        <p class="project-desc">
+          A trading REST API handling 3,500+ orders/sec with sub-55ms P99 latency. Features a real-time order matching engine with market/limit orders, partial fills, price-time priority, and automated price updates on execution.
+        </p>
+      </div>
+      <div class="project-meta">
+        <div class="project-tags">
+          <span>ASP.NET Core</span>
+          <span>EF Core</span>
+          <span>MySQL</span>
+          <span>C#</span>
+        </div>
+        <a class="project-link" href="#">
+          View Project <span class="arrow">&#8594;</span>
+        </a>
+      </div>
+    </div>
+    <div class="project-right">
+      <div class="project-number">01</div>
+      <div class="project-visual">
+        <pre class="ascii-art">
+  $ ./trade-engine --bench
+  +-----------------------+
+  | throughput: 3,512/s   |
+  | P99 latency: 54ms    |
+  | ====================  |
+  |                       |
+  | LIMIT BUY  AAPL 142.5|
+  | LIMIT SELL AAPL 142.5|
+  |   -> MATCHED (full)   |
+  | MKT  BUY  MSFT       |
+  |   -> FILLED @ 389.20  |
+  | queue: 7 pending      |
+  +-----------------------+
+        </pre>
+      </div>
+    </div>
+  </article>
+
+  <!-- Project 02: AnchorMap -->
+  <article class="project scroll-reveal">
+    <div class="project-index">02</div>
+    <div class="project-info">
+      <div>
+        <h3 class="project-name">Anchor<br>Map<span class="project-accent">.</span></h3>
+        <p class="project-desc">
+          An iOS LiDAR scanning app that captures 3D meshes and geotags them on a shared map via CloudKit. Colorizes ~100K vertices through camera-space projection with bilinear interpolation, parallelized via GCD. Deep-copies CVPixelBuffers to eliminate AR capture stutter.
+        </p>
+      </div>
+      <div class="project-meta">
+        <div class="project-tags">
+          <span>SwiftUI</span>
+          <span>LiDAR</span>
+          <span>CloudKit</span>
+          <span>GCD</span>
+        </div>
+        <a class="project-link" href="#">
+          View Project <span class="arrow">&#8594;</span>
+        </a>
+      </div>
+    </div>
+    <div class="project-right">
+      <div class="project-number">02</div>
+      <div class="project-visual">
+        <pre class="ascii-art">
+  +---------------------+
+  | LIDAR SCAN          |
+  |  +---------------+  |
+  |  |  .  ... .     |  |
+  |  | ...#####...   |  |
+  |  | .#########.   |  |
+  |  |  .#######.    |  |
+  |  +---------------+  |
+  | vtx: 102,847        |
+  | frames: 50 (evict)  |
+  | 37.2N 80.4W synced  |
+  +---------------------+
+        </pre>
+      </div>
+    </div>
+  </article>
+
+  <!-- Project 03: Multi-Agent SLAM -->
+  <article class="project scroll-reveal">
+    <div class="project-index">03</div>
+    <div class="project-info">
+      <div>
+        <h3 class="project-name">Multi-Agent<br>SLAM<span class="project-accent">.</span></h3>
+        <p class="project-desc">
+          A multi-agent SLAM system using particle filters and occupancy grid mapping for concurrent exploration of unknown 2D environments. Map merging via feature extraction, RANSAC, and SVD-based rigid transforms. Built on Python multiprocessing with shared queues for real-time fusion.
+        </p>
+      </div>
+      <div class="project-meta">
+        <div class="project-tags">
+          <span>Python</span>
+          <span>SLAM</span>
+          <span>RANSAC</span>
+          <span>Multiprocessing</span>
+        </div>
+        <a class="project-link" href="#">
+          View Project <span class="arrow">&#8594;</span>
+        </a>
+      </div>
+    </div>
+    <div class="project-right">
+      <div class="project-number">03</div>
+      <div class="project-visual">
+        <pre class="ascii-art">
+  agent_0        agent_1
+  +------+      +------+
+  |......|      |......|
+  |.####.|      |.####.|
+  |.#  #.|      |.#  #.|
+  |.####.|      |.####.|
+  |......|      |......|
+  +--+---+      +---+--+
+     |    RANSAC    |
+     +------+-------+
+            |
+     +------+------+
+     |  FUSED MAP  |
+     |  ...######..|
+     |  .##    ##. |
+     |  ...######..|
+     +-------------+
+        </pre>
+      </div>
+    </div>
+  </article>
+
+</div>
+
+<!-- FUTURE PROJECTS -->
+<section class="future" id="future">
+  <div class="projects-header">
+    <h2>Ongoing</h2>
+    <span>In Progress / Planned</span>
+  </div>
+  <div class="future-grid">
+
+    <div class="future-card scroll-reveal">
+      <div class="future-status">
+        <span class="status-dot"></span>
+        In Progress
+      </div>
+      <h3 class="future-name">Heartbeat Terrain</h3>
+      <p class="future-desc">
+        A 3D terrain engine where vertex elevations are derived from Apple Watch heart rate and GPS. Perlin noise heightmaps computed on the GPU with Metal shaders, rendered in SceneKit. Building toward persistent landscapes that evolve with accumulated health data.
+      </p>
+      <div class="project-tags">
+        <span>Metal</span>
+        <span>SceneKit</span>
+        <span>HealthKit</span>
+        <span>GPU Compute</span>
+      </div>
+    </div>
+
+    <div class="future-card scroll-reveal">
+      <div class="future-status planned">
+        <span class="status-ring"></span>
+        Planned
+      </div>
+      <h3 class="future-name">Time Ranger</h3>
+      <p class="future-desc">
+        A browser extension for Google Maps that filters places by how long they'll stay open. Set a minimum remaining duration and only see places you can actually visit &#8212; no more "open now" results that close in 10 minutes.
+      </p>
+      <div class="project-tags">
+        <span>Chrome Extension</span>
+        <span>Google Maps</span>
+        <span>JavaScript</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-right scroll-reveal" id="contact">
+    <ul class="contact-list">
+      <li>
+        <span>GitHub</span>
+        <a href="https://github.com/SAhmed229">github.com/SAhmed229 &#8594;</a>
+      </li>
+      <li>
+        <span>Email</span>
+        <a href="/cdn-cgi/l/email-protection#1170797c747562797e64627970373227252a67653f747564">ahmedshousha&#64;vt.edu &#8594;</a>
+      </li>
+      <li>
+        <span>LinkedIn</span>
+        <a href="#">linkedin.com/in/ahmed &#8594;</a>
+      </li>
+      <li>
+        <span>Resume</span>
+        <a href="#">download pdf &#8594;</a>
+      </li>
+    </ul>
+    <div class="status">
+      <span class="status-dot"></span>
+      Open to internships &#38; collaborations
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <span>&#169; 2026 Ahmed Shousha</span>
+  <span>Blacksburg, VA</span>
+  <span>Last updated &#8212; Mar 2026</span>
+</footer>
+
+<scri
